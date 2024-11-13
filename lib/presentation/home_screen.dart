@@ -35,32 +35,42 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }) {
     showModalBottomSheet<void>(
       context: context,
+      useSafeArea: true,
       builder: (BuildContext context) {
-        return ListView(
-          children: SupportedLanguages.languages.entries.map((entry) {
-            final isDisabled = (isSourceLang && entry.key == targetLang) ||
-                (!isSourceLang && entry.key == sourceLang);
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: ListView(
+            children: SupportedLanguages.languages.entries.map((entry) {
+              final isDisabled = (isSourceLang && entry.key == targetLang) ||
+                  (!isSourceLang && entry.key == sourceLang);
 
-            return ListTile(
-              leading: Text(SupportedLanguages.getFlag(entry.value)),
-              title: Text(SupportedLanguages.getLanguage(entry.key)),
-              onTap: isDisabled
-                  ? null
-                  : () {
-                      setState(() {
-                        if (isSourceLang) {
-                          sourceLang = entry.key;
-                        } else {
-                          targetLang = entry.key;
-                        }
-                      });
-                      Navigator.pop(context);
-                    },
-              tileColor: entry.key == (isSourceLang ? sourceLang : targetLang)
-                  ? Theme.of(context).colorScheme.secondary
-                  : null,
-            );
-          }).toList(),
+              return ListTile(
+                leading: Icon(
+                  entry.key == (isSourceLang ? sourceLang : targetLang)
+                      ? Icons.check
+                      : null,
+                ),
+                title: Text(
+                  '${SupportedLanguages.getFlag(entry.key)} ${SupportedLanguages.getLanguage(entry.key)}',
+                ),
+                onTap: isDisabled
+                    ? null
+                    : () {
+                        setState(() {
+                          if (isSourceLang) {
+                            sourceLang = entry.key;
+                          } else {
+                            targetLang = entry.key;
+                          }
+                        });
+                        Navigator.pop(context);
+                      },
+                tileColor: entry.key == (isSourceLang ? sourceLang : targetLang)
+                    ? Theme.of(context).colorScheme.primary.withOpacity(0.25)
+                    : null,
+              );
+            }).toList(),
+          ),
         );
       },
     );
@@ -111,6 +121,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                         const Spacer(),
                         CustomIconButton(
+                          icon: Icons.swap_vert,
+                          onPressed: translationState.isLoading ||
+                                  translationState.translation != null
+                              ? null
+                              : switchLanguages,
+                          tooltip: 'Switch languages',
+                        ),
+                        const Gap(8),
+                        CustomIconButton(
                           icon: Icons.clear,
                           onPressed: translationState.isLoading ||
                                   translationState.translation != null
@@ -128,7 +147,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ],
                 ),
               ),
-              const Gap(8),
               TextDisplayContainer(
                 child: Column(
                   children: [
@@ -144,7 +162,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         const Spacer(),
                         CustomIconButton(
                           icon: Icons.copy,
-                          onPressed: translationState.isLoading
+                          onPressed: translationState.isLoading ||
+                                  translationState.translation == null
                               ? null
                               : () {
                                   Clipboard.setData(
