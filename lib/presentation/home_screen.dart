@@ -133,8 +133,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           icon: Icons.clear,
                           onPressed: translationState.isLoading ||
                                   translationState.translation != null
-                              ? null
-                              : sourceTextController.clear,
+                              ? () {}
+                              : () => sourceTextController.clear(),
                           tooltip: 'Clear source text',
                         ),
                       ],
@@ -147,6 +147,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ],
                 ),
               ),
+              const Gap(8),
               TextDisplayContainer(
                 child: Column(
                   children: [
@@ -164,7 +165,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           icon: Icons.copy,
                           onPressed: translationState.isLoading ||
                                   translationState.translation == null
-                              ? null
+                              ? () {}
                               : () {
                                   Clipboard.setData(
                                     ClipboardData(
