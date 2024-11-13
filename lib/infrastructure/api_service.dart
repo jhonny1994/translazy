@@ -30,7 +30,8 @@ class TranslationNotifier extends StateNotifier<TranslationState> {
       );
       if (response.statusCode == 200) {
         state = state.copyWith(
-          translation: response.data!['response']['translated_text'] as String,
+          translation: (response.data!['response']
+              as Map<String, dynamic>)['translated_text'] as String,
           isLoading: false,
         );
       } else {
