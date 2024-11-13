@@ -13,7 +13,11 @@ class TranslationNotifier extends StateNotifier<TranslationState> {
     String sourceLang,
     String targetLang,
   ) async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(
+      isLoading: true,
+      error: null,
+      translation: null,
+    );
 
     try {
       final response = await dio.get<Map<String, dynamic>>(
@@ -24,10 +28,9 @@ class TranslationNotifier extends StateNotifier<TranslationState> {
           'target_lang': targetLang,
         },
       );
-
       if (response.statusCode == 200) {
         state = state.copyWith(
-          translation: response.data!['translatedText'] as String,
+          translation: response.data!['response']['translated_text'] as String,
           isLoading: false,
         );
       } else {

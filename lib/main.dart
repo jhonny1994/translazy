@@ -1,10 +1,17 @@
+import 'dart:io';
+
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:translazy/presentation/home_screen.dart';
 
 void main() {
   runApp(
-    const ProviderScope(
-      child: MainApp(),
+    ProviderScope(
+      child: DevicePreview(
+        enabled: Platform.isWindows,
+        builder: (context) => const MainApp(),
+      ),
     ),
   );
 }
@@ -14,12 +21,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp(
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      debugShowCheckedModeBanner: false,
+      home: const HomeScreen(),
     );
   }
 }

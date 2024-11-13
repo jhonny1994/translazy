@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+
 part 'translation_state.freezed.dart';
 
 @freezed
