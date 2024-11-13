@@ -3,6 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:translazy/core/supported_languages.dart';
+import 'package:translazy/presentation/widgets/custom_icon_button.dart';
+import 'package:translazy/presentation/widgets/language_selector_button.dart';
+import 'package:translazy/presentation/widgets/language_text_field.dart';
+import 'package:translazy/presentation/widgets/text_display_container.dart';
 import 'package:translazy/providers/translation_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -33,33 +37,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       context: context,
       builder: (BuildContext context) {
         return ListView(
-          children: SupportedLanguages.languages.entries.map(
-            (entry) {
-              final isLanguageDisabled =
-                  (isSourceLang && entry.key == targetLang) ||
-                      (!isSourceLang && entry.key == sourceLang);
+          children: SupportedLanguages.languages.entries.map((entry) {
+            final isDisabled = (isSourceLang && entry.key == targetLang) ||
+                (!isSourceLang && entry.key == sourceLang);
 
-              return ListTile(
-                leading: Text(SupportedLanguages.getFlag(entry.value)),
-                title: Text(SupportedLanguages.getLanguage(entry.key)),
-                onTap: isLanguageDisabled
-                    ? null
-                    : () {
-                        setState(() {
-                          if (isSourceLang) {
-                            sourceLang = entry.key;
-                          } else {
-                            targetLang = entry.key;
-                          }
-                        });
-                        Navigator.pop(context);
-                      },
-                tileColor: entry.key == (isSourceLang ? sourceLang : targetLang)
-                    ? Theme.of(context).colorScheme.secondary
-                    : null,
-              );
-            },
-          ).toList(),
+            return ListTile(
+              leading: Text(SupportedLanguages.getFlag(entry.value)),
+              title: Text(SupportedLanguages.getLanguage(entry.key)),
+              onTap: isDisabled
+                  ? null
+                  : () {
+                      setState(() {
+                        if (isSourceLang) {
+                          sourceLang = entry.key;
+                        } else {
+                          targetLang = entry.key;
+                        }
+                      });
+                      Navigator.pop(context);
+                    },
+              tileColor: entry.key == (isSourceLang ? sourceLang : targetLang)
+                  ? Theme.of(context).colorScheme.secondary
+                  : null,
+            );
+          }).toList(),
         );
       },
     );
@@ -89,143 +90,61 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         translationState.translation != translatedTextController.text) {
       translatedTextController.text = translationState.translation!;
     }
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
             children: [
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[600]!),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          FilledButton.icon(
-                            onPressed: () => translationState.isLoading
-                                ? null
-                                : showLanguageBottomSheet(
-                                    context,
-                                    isSourceLang: true,
-                                  ),
-                            style: FilledButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              foregroundColor: Colors.grey[600],
-                              backgroundColor: Colors.grey[300],
-                            ),
-                            icon: Text(SupportedLanguages.getFlag(sourceLang)),
-                            label: Row(
-                              children: [
-                                Text(
-                                  SupportedLanguages.getLanguage(sourceLang),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: translationState.isLoading ||
-                                    translationState.translation != null
-                                ? null
-                                : () {
-                                    sourceTextController.clear();
-                                  },
-                            icon: const Icon(Icons.clear),
-                            style: IconButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              foregroundColor: Colors.grey[600],
-                              backgroundColor: Colors.grey[300],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: TextField(
-                          controller: sourceTextController,
-                          maxLines: null,
-                          expands: true,
-                          maxLength: 100,
-                          textAlign: TextAlign.center,
-                          enabled: !translationState.isLoading,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            hintText: 'Enter text to translate...',
-                            counter: SizedBox(),
+              TextDisplayContainer(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        LanguageSelectorButton(
+                          languageCode: sourceLang,
+                          onTap: () => showLanguageBottomSheet(
+                            context,
+                            isSourceLang: true,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                        const Spacer(),
+                        CustomIconButton(
+                          icon: Icons.clear,
+                          onPressed: translationState.isLoading ||
+                                  translationState.translation != null
+                              ? null
+                              : sourceTextController.clear,
+                          tooltip: 'Clear source text',
+                        ),
+                      ],
+                    ),
+                    LanguageTextField(
+                      controller: sourceTextController,
+                      hintText: 'Enter text to translate...',
+                      isReadOnly: translationState.isLoading,
+                    ),
+                  ],
                 ),
               ),
               const Gap(8),
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[600]!),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          FilledButton.icon(
-                            onPressed: () => translationState.isLoading
-                                ? null
-                                : showLanguageBottomSheet(
-                                    context,
-                                    isSourceLang: false,
-                                  ),
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              foregroundColor: Colors.grey[600],
-                              backgroundColor: Colors.grey[300],
-                            ),
-                            icon: Text(SupportedLanguages.getFlag(targetLang)),
-                            label: Text(
-                              SupportedLanguages.getLanguage(targetLang),
-                            ),
+              TextDisplayContainer(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        LanguageSelectorButton(
+                          languageCode: targetLang,
+                          onTap: () => showLanguageBottomSheet(
+                            context,
+                            isSourceLang: false,
                           ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed:
-                                translationState.isLoading ? null : () {},
-                            icon: const Icon(Icons.copy),
-                            style: IconButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              foregroundColor: Colors.grey[600],
-                              backgroundColor: Colors.grey[300],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: TextField(
-                          controller: translatedTextController,
-                          maxLines: null,
-                          expands: true,
-                          readOnly: true,
-                          onTap: translationState.isLoading ||
-                                  translationState.error != null ||
-                                  translationState.translation == null
+                        ),
+                        const Spacer(),
+                        CustomIconButton(
+                          icon: Icons.copy,
+                          onPressed: translationState.isLoading
                               ? null
                               : () {
                                   Clipboard.setData(
@@ -240,19 +159,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     ),
                                   );
                                 },
-                          textAlign: TextAlign.center,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-                            hintText: 'Translation will appear here...',
-                          ),
+                          tooltip: 'Copy translation',
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                    LanguageTextField(
+                      controller: translatedTextController,
+                      hintText: 'Translation will appear here...',
+                      isReadOnly: true,
+                    ),
+                  ],
                 ),
               ),
               const Gap(8),
@@ -274,8 +190,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             }
                           },
                 style: FilledButton.styleFrom(
+                  minimumSize: const Size.fromHeight(40),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                 ),
                 child: Text(
