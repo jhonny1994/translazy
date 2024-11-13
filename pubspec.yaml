@@ -1,19 +1,28 @@
 name: translazy
-description: "A new Flutter project."
-publish_to: 'none'
+description: "Effortless text translation with just a tap!"
+publish_to: "none"
 version: 0.1.0
 
 environment:
   sdk: ^3.5.4
 
 dependencies:
+  dio: ^5.7.0
   flutter:
     sdk: flutter
+  flutter_riverpod: ^2.6.1
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
 
 dev_dependencies:
+  build_runner: ^2.4.13
+  custom_lint: ^0.7.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  riverpod_lint: ^2.6.2
+  very_good_analysis: ^6.0.0
 
 flutter:
   uses-material-design: true
