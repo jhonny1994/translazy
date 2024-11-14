@@ -4,11 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:translazy/core/supported_languages.dart';
+import 'package:translazy/domain/translation_model.dart';
 import 'package:translazy/presentation/widgets/custom_icon_button.dart';
 import 'package:translazy/presentation/widgets/language_selector_button.dart';
 import 'package:translazy/presentation/widgets/language_text_field.dart';
 import 'package:translazy/presentation/widgets/text_display_container.dart';
-import 'package:translazy/providers/theme_notifier_provider.dart';
+import 'package:translazy/providers/history_notifier_provider.dart';
 import 'package:translazy/providers/translation_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -21,11 +22,11 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   late String sourceLang;
   late String targetLang;
+  late stt.SpeechToText _speech;
 
   TextEditingController sourceTextController = TextEditingController();
   TextEditingController translatedTextController = TextEditingController();
 
-  late stt.SpeechToText _speech;
   bool _isListening = false;
 
   @override
@@ -126,7 +127,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final translationState = ref.watch(translationProvider);
-
     if (translationState.error != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -138,186 +138,174 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (translationState.translation != null &&
         translationState.translation != translatedTextController.text) {
       translatedTextController.text = translationState.translation!;
+      final record = TranslationRecord(
+        sourceText: sourceTextController.text,
+        translatedText: translationState.translation!,
+        sourceLang: sourceLang,
+        targetLang: targetLang,
+        timestamp: DateTime.now(),
+      );
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ref.read(historyProvider.notifier).addRecord(record),
+      );
     }
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('TransLazy'),
-        actions: [
-          IconButton(
-            onPressed: () => ref.read(themeNotifierProvider.notifier).toggle(),
-            icon: Icon(
-              ref.watch(themeNotifierProvider)
-                  ? Icons.dark_mode
-                  : Icons.light_mode,
+      body: Column(
+        children: [
+          TextDisplayContainer(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: LanguageSelectorButton(
+                        languageCode: sourceLang,
+                        onTap: () => showLanguageBottomSheet(
+                          context,
+                          isSourceLang: true,
+                        ),
+                      ),
+                    ),
+                    const Gap(8),
+                    CustomIconButton(
+                      icon: _isListening ? Icons.mic : Icons.mic_none,
+                      onPressed: translationState.isLoading ||
+                              translationState.translation != null
+                          ? null
+                          : _isListening
+                              ? _stopListening
+                              : _startListening,
+                      tooltip:
+                          _isListening ? 'Stop listening' : 'Start listening',
+                    ),
+                    const Gap(8),
+                    CustomIconButton(
+                      icon: Icons.clear,
+                      onPressed: _isListening ||
+                              translationState.isLoading ||
+                              translationState.translation != null
+                          ? () {}
+                          : () => sourceTextController.clear(),
+                      tooltip: 'Clear source text',
+                    ),
+                  ],
+                ),
+                LanguageTextField(
+                  controller: sourceTextController,
+                  hintText: 'Enter text to translate...',
+                  isReadOnly: _isListening || translationState.isLoading,
+                ),
+              ],
             ),
           ),
           const Gap(8),
-        ],
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Column(
-            children: [
-              TextDisplayContainer(
-                child: Column(
+          TextDisplayContainer(
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: LanguageSelectorButton(
-                            languageCode: sourceLang,
-                            onTap: () => showLanguageBottomSheet(
-                              context,
-                              isSourceLang: true,
-                            ),
-                          ),
-                        ),
-                        const Gap(8),
-                        CustomIconButton(
-                          icon: _isListening ? Icons.mic : Icons.mic_none,
-                          onPressed: translationState.isLoading ||
-                                  translationState.translation != null
-                              ? null
-                              : _isListening
-                                  ? _stopListening
-                                  : _startListening,
-                          tooltip: _isListening
-                              ? 'Stop listening'
-                              : 'Start listening',
-                        ),
-                        const Gap(8),
-                        CustomIconButton(
-                          icon: Icons.clear,
-                          onPressed: _isListening ||
-                                  translationState.isLoading ||
-                                  translationState.translation != null
-                              ? () {}
-                              : () => sourceTextController.clear(),
-                          tooltip: 'Clear source text',
-                        ),
-                      ],
-                    ),
-                    LanguageTextField(
-                      controller: sourceTextController,
-                      hintText: 'Enter text to translate...',
-                      isReadOnly: _isListening || translationState.isLoading,
-                    ),
-                  ],
-                ),
-              ),
-              const Gap(8),
-              TextDisplayContainer(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: LanguageSelectorButton(
-                            languageCode: targetLang,
-                            onTap: () => _isListening
-                                ? null
-                                : showLanguageBottomSheet(
-                                    context,
-                                    isSourceLang: false,
-                                  ),
-                          ),
-                        ),
-                        const Gap(8),
-                        CustomIconButton(
-                          icon: Icons.swap_vert,
-                          onPressed: _isListening ||
-                                  translationState.isLoading ||
-                                  translationState.translation != null
-                              ? null
-                              : switchLanguages,
-                          tooltip: 'Switch languages',
-                        ),
-                        const Gap(8),
-                        CustomIconButton(
-                          icon: Icons.copy,
-                          onPressed: _isListening ||
-                                  translationState.isLoading ||
-                                  translationState.translation == null
-                              ? () {}
-                              : () {
-                                  Clipboard.setData(
-                                    ClipboardData(
-                                      text: translatedTextController.text,
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text('Text copied to clipboard!'),
-                                    ),
-                                  );
-                                },
-                          tooltip: 'Copy translation',
-                        ),
-                      ],
-                    ),
-                    LanguageTextField(
-                      controller: translatedTextController,
-                      hintText: 'Translation will appear here...',
-                      isReadOnly: true,
-                    ),
-                  ],
-                ),
-              ),
-              const Gap(8),
-              ElevatedButton(
-                onPressed: _isListening ||
-                        translationState.isLoading ||
-                        translationState.error != null
-                    ? null
-                    : () {
-                        if (translationState.translation != null) {
-                          // Clear the text in controllers
-                          sourceTextController.clear();
-                          translatedTextController.clear();
-
-                          // Reset translation state
-                          ref
-                              .read(translationProvider.notifier)
-                              .clearTranslation();
-                        } else {
-                          final textToTranslate = sourceTextController.text;
-                          ref.read(translationProvider.notifier).translate(
-                                textToTranslate,
-                                sourceLang,
-                                targetLang,
-                              );
-                        }
-                      },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(48),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  shadowColor: Colors.black.withOpacity(0.3),
-                ),
-                child: translationState.isLoading
-                    ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).primaryColor,
-                        ),
-                      )
-                    : Text(
-                        translationState.translation != null
-                            ? 'Clear'
-                            : 'Translate',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Expanded(
+                      child: LanguageSelectorButton(
+                        languageCode: targetLang,
+                        onTap: () => _isListening
+                            ? null
+                            : showLanguageBottomSheet(
+                                context,
+                                isSourceLang: false,
+                              ),
                       ),
-              ),
-            ],
+                    ),
+                    const Gap(8),
+                    CustomIconButton(
+                      icon: Icons.swap_vert,
+                      onPressed: _isListening ||
+                              translationState.isLoading ||
+                              translationState.translation != null
+                          ? null
+                          : switchLanguages,
+                      tooltip: 'Switch languages',
+                    ),
+                    const Gap(8),
+                    CustomIconButton(
+                      icon: Icons.copy,
+                      onPressed: _isListening ||
+                              translationState.isLoading ||
+                              translationState.translation == null
+                          ? () {}
+                          : () {
+                              Clipboard.setData(
+                                ClipboardData(
+                                  text: translatedTextController.text,
+                                ),
+                              );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Text copied to clipboard!'),
+                                ),
+                              );
+                            },
+                      tooltip: 'Copy translation',
+                    ),
+                  ],
+                ),
+                LanguageTextField(
+                  controller: translatedTextController,
+                  hintText: 'Translation will appear here...',
+                  isReadOnly: true,
+                ),
+              ],
+            ),
           ),
-        ),
+          const Gap(8),
+          ElevatedButton(
+            onPressed: _isListening ||
+                    translationState.isLoading ||
+                    translationState.error != null
+                ? null
+                : () async {
+                    if (translationState.translation != null) {
+                      // Clear the text in controllers
+                      sourceTextController.clear();
+                      translatedTextController.clear();
+
+                      // Reset translation state
+                      ref.read(translationProvider.notifier).clearTranslation();
+                    } else {
+                      final textToTranslate = sourceTextController.text;
+
+                      // Wait for the translation to complete
+                      await ref.read(translationProvider.notifier).translate(
+                            textToTranslate,
+                            sourceLang,
+                            targetLang,
+                          );
+                    }
+                  },
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size.fromHeight(48),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shadowColor: Colors.black.withOpacity(0.3),
+            ),
+            child: translationState.isLoading
+                ? CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).primaryColor,
+                    ),
+                  )
+                : Text(
+                    translationState.translation != null
+                        ? 'Clear'
+                        : 'Translate',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+          ),
+        ],
       ),
     );
   }

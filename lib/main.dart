@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translazy/core/theme.dart';
-import 'package:translazy/presentation/home_screen.dart';
+import 'package:translazy/presentation/base_screen.dart';
 import 'package:translazy/providers/shared_prefrences_provider.dart';
 import 'package:translazy/providers/theme_notifier_provider.dart';
 
@@ -39,7 +39,7 @@ class MainApp extends ConsumerWidget {
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
       themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: const HomeScreen(),
+      home: const BaseScreen(),
     );
   }
 }
