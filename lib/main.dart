@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:translazy/core/theme.dart';
 import 'package:translazy/presentation/home_screen.dart';
 
 void main() {
@@ -25,6 +26,8 @@ class MainApp extends StatelessWidget {
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
+      theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
       home: const HomeScreen(),
     );
   }

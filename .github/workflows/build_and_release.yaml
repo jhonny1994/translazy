@@ -28,7 +28,7 @@ jobs:
       - name: Get build number
         id: get_build_number
         run: |
-          BUILD_NUMBER=$(grep '^version:' pubspec.yaml | sed 's/[^+]*+//')
+          BUILD_NUMBER=$(grep '^version:' pubspec.yaml | sed 's/version: //;s/\+.*//')
           echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
         shell: bash
 
