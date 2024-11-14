@@ -18,13 +18,6 @@ class LanguageSelectorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton.icon(
       onPressed: onTap,
-      style: FilledButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        foregroundColor: Colors.grey[600],
-        backgroundColor: Colors.grey[300],
-      ),
       icon: Text(SupportedLanguages.getFlag(languageCode)),
       label: Text(SupportedLanguages.getLanguage(languageCode)),
     );

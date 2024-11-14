@@ -7,6 +7,7 @@ import 'package:translazy/presentation/widgets/custom_icon_button.dart';
 import 'package:translazy/presentation/widgets/language_selector_button.dart';
 import 'package:translazy/presentation/widgets/language_text_field.dart';
 import 'package:translazy/presentation/widgets/text_display_container.dart';
+import 'package:translazy/providers/theme_notifier_provider.dart';
 import 'package:translazy/providers/translation_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -102,6 +103,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('TransLazy'),
+        actions: [
+          IconButton(
+            onPressed: () => ref.read(themeNotifierProvider.notifier).toggle(),
+            icon: Icon(
+              ref.watch(themeNotifierProvider)
+                  ? Icons.dark_mode
+                  : Icons.light_mode,
+            ),
+          ),
+          const Gap(8),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8),
@@ -192,7 +207,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
               ),
               const Gap(8),
-              FilledButton(
+              ElevatedButton(
                 onPressed:
                     translationState.isLoading || translationState.error != null
                         ? null
@@ -209,7 +224,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   );
                             }
                           },
-                style: FilledButton.styleFrom(
+                style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(40),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
