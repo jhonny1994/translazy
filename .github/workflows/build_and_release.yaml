@@ -45,13 +45,11 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Create Release
-        id: create_release
         uses: softprops/action-gh-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: "v${{ env.BUILD_NUMBER }}"
           name: "Release v${{ env.BUILD_NUMBER }}"
           files: build/app/outputs/flutter-apk/app-release.apk
+          token: "${{ secrets.ACTIONS_TOKEN }}"
           fail_on_unmatched_files: true
           make_latest: true
