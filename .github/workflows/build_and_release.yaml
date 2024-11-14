@@ -1,0 +1,51 @@
+name: Build and Release APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+          cache: true
+
+      - name: Get build number
+        id: get_build_number
+        run: |
+          BUILD_NUMBER=$(grep '^version:' pubspec.yaml | sed 's/[^+]*+//')
+          echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Archive APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v${{ env.BUILD_NUMBER }}"
+          name: "Release v${{ env.BUILD_NUMBER }}"
+          files: build/app/outputs/flutter-apk/app-release.apk
+          fail_on_unmatched_files: true
+          make_latest: true
