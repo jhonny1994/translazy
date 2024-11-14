@@ -106,6 +106,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(
         title: const Text('TransLazy'),
         actions: [
+          CustomIconButton(
+            icon: Icons.swap_vert,
+            onPressed: translationState.isLoading ||
+                    translationState.translation != null
+                ? null
+                : switchLanguages,
+            tooltip: 'Switch languages',
+          ),
+          const Gap(8),
           IconButton(
             onPressed: () => ref.read(themeNotifierProvider.notifier).toggle(),
             icon: Icon(
@@ -135,15 +144,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                         ),
                         const Spacer(),
-                        CustomIconButton(
-                          icon: Icons.swap_vert,
-                          onPressed: translationState.isLoading ||
-                                  translationState.translation != null
-                              ? null
-                              : switchLanguages,
-                          tooltip: 'Switch languages',
-                        ),
-                        const Gap(8),
                         CustomIconButton(
                           icon: Icons.clear,
                           onPressed: translationState.isLoading ||
