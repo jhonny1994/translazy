@@ -157,7 +157,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [
               TextDisplayContainer(
@@ -177,8 +177,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         const Gap(8),
                         CustomIconButton(
                           icon: _isListening ? Icons.mic : Icons.mic_none,
-                          onPressed:
-                              _isListening ? _stopListening : _startListening,
+                          onPressed: translationState.isLoading ||
+                                  translationState.translation != null
+                              ? null
+                              : _isListening
+                                  ? _stopListening
+                                  : _startListening,
                           tooltip: _isListening
                               ? 'Stop listening'
                               : 'Start listening',
@@ -270,8 +274,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ? null
                     : () {
                         if (translationState.translation != null) {
+                          // Clear the text in controllers
                           sourceTextController.clear();
                           translatedTextController.clear();
+
+                          // Reset translation state
+                          ref
+                              .read(translationProvider.notifier)
+                              .clearTranslation();
                         } else {
                           final textToTranslate = sourceTextController.text;
                           ref.read(translationProvider.notifier).translate(
@@ -286,16 +296,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   shadowColor: Colors.black.withOpacity(0.3),
                 ),
-                child: Text(
-                  translationState.translation != null ? 'Clear' : 'Translate',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: translationState.isLoading
+                    ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Theme.of(context).primaryColor,
+                        ),
+                      )
+                    : Text(
+                        translationState.translation != null
+                            ? 'Clear'
+                            : 'Translate',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
             ],
           ),

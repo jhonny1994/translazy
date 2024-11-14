@@ -51,4 +51,11 @@ class TranslationNotifier extends StateNotifier<TranslationState> {
       throw TranslationError('Unexpected Error: $e');
     }
   }
+
+  void clearTranslation() {
+    state = state.copyWith(
+      translation: null,
+      error: null,
+    );
+  }
 }
