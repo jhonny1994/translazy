@@ -7,7 +7,8 @@ part of 'translation_model.dart';
 // **************************************************************************
 
 _$TranslationRecordImpl _$$TranslationRecordImplFromJson(
-        Map<String, dynamic> json) =>
+  Map<String, dynamic> json,
+) =>
     _$TranslationRecordImpl(
       sourceText: json['sourceText'] as String,
       translatedText: json['translatedText'] as String,
@@ -17,7 +18,8 @@ _$TranslationRecordImpl _$$TranslationRecordImplFromJson(
     );
 
 Map<String, dynamic> _$$TranslationRecordImplToJson(
-        _$TranslationRecordImpl instance) =>
+  _$TranslationRecordImpl instance,
+) =>
     <String, dynamic>{
       'sourceText': instance.sourceText,
       'translatedText': instance.translatedText,

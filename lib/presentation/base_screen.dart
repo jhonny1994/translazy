@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:translazy/core/localization/generated/l10n.dart';
 import 'package:translazy/presentation/history_screen.dart';
 import 'package:translazy/presentation/home_screen.dart';
+import 'package:translazy/providers/localization_provider.dart';
 import 'package:translazy/providers/theme_notifier_provider.dart';
 
 class BaseScreen extends ConsumerStatefulWidget {
@@ -24,15 +26,29 @@ class _BaseScreenState extends ConsumerState<BaseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TransLazy'),
+        title: Text(S.current.appName),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () => ref.read(themeNotifierProvider.notifier).toggle(),
+          icon: Icon(
+            ref.watch(themeNotifierProvider)
+                ? Icons.dark_mode
+                : Icons.light_mode,
+          ),
+        ),
         actions: [
-          IconButton(
-            onPressed: () => ref.read(themeNotifierProvider.notifier).toggle(),
-            icon: Icon(
-              ref.watch(themeNotifierProvider)
-                  ? Icons.dark_mode
-                  : Icons.light_mode,
-            ),
+          PopupMenuButton<Locale>(
+            icon: const Icon(Icons.language),
+            onSelected: (value) =>
+                ref.read(localizationNotifierProvider.notifier).toggle(value),
+            itemBuilder: (context) {
+              return S.delegate.supportedLocales.map((locale) {
+                return PopupMenuItem<Locale>(
+                  value: locale,
+                  child: Text(locale.languageCode),
+                );
+              }).toList();
+            },
           ),
           const Gap(8),
         ],
@@ -43,11 +59,11 @@ class _BaseScreenState extends ConsumerState<BaseScreen> {
         items: [
           SalomonBottomBarItem(
             icon: const Icon(Icons.translate),
-            title: const Text('Translation'),
+            title: Text(S.of(context).translation),
           ),
           SalomonBottomBarItem(
             icon: const Icon(Icons.history),
-            title: const Text('History'),
+            title: Text(S.of(context).history),
           ),
         ],
       ),

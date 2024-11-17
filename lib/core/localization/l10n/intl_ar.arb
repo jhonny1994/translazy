@@ -1,0 +1,18 @@
+{
+  "appName": "TransLazy",
+  "translation": "ترجمة",
+  "history": "سجل",
+  "sttNotAvailable": "التعرف على الصوت غير متوفر. يرجى التحقق من إعدادات الميكروفون.",
+  "stopListening": "إيقاف الاستماع",
+  "startListening": "بدء الاستماع",
+  "clearSourceText": "مسح النص",
+  "enterTextToTranslate": "أدخل نصا للترجمة...",
+  "switchLanguages": "تبديل اللغات",
+  "textCopiedToClipboard": "تم نسخ النص إلى الحافظة!",
+  "copyTranslation": "نسخ الترجمة",
+  "translationWillAppearHere": "ستظهر الترجمة هنا...",
+  "clear": "مسح",
+  "translate": "ترجمة",
+  "clearHistory": "مسح السجل",
+  "noTranslationsYet": "لا توجد ترجمات حتى الآن"
+}

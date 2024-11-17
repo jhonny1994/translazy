@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:translazy/core/localization/generated/l10n.dart';
 import 'package:translazy/core/supported_languages.dart';
 import 'package:translazy/providers/history_notifier_provider.dart';
 
@@ -18,12 +19,12 @@ class HistoryScreen extends ConsumerWidget {
               onPressed: () async {
                 await ref.read(historyProvider.notifier).clearHistory();
               },
-              tooltip: 'Clear History',
+              tooltip: S.of(context).clearHistory,
               child: const Icon(Icons.delete),
             ),
       body: history.isEmpty
-          ? const Center(
-              child: Text('No translations yet'),
+          ? Center(
+              child: Text(S.of(context).noTranslationsYet),
             )
           : ListView.separated(
               itemCount: history.length,

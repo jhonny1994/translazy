@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:translazy/core/localization/generated/l10n.dart';
 import 'package:translazy/core/supported_languages.dart';
 import 'package:translazy/domain/translation_model.dart';
 import 'package:translazy/presentation/widgets/custom_icon_button.dart';
@@ -53,11 +54,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Speech recognition is not available. Please check your microphone settings.',
-              ),
-            ),
+            SnackBar(content: Text(S.of(context).sttNotAvailable)),
           );
         }
       }
@@ -175,8 +172,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           : _isListening
                               ? _stopListening
                               : _startListening,
-                      tooltip:
-                          _isListening ? 'Stop listening' : 'Start listening',
+                      tooltip: _isListening
+                          ? S.of(context).stopListening
+                          : S.of(context).startListening,
                     ),
                     const Gap(8),
                     CustomIconButton(
@@ -186,13 +184,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               translationState.translation != null
                           ? () {}
                           : () => sourceTextController.clear(),
-                      tooltip: 'Clear source text',
+                      tooltip: S.of(context).clearSourceText,
                     ),
                   ],
                 ),
                 LanguageTextField(
                   controller: sourceTextController,
-                  hintText: 'Enter text to translate...',
+                  hintText: S.of(context).enterTextToTranslate,
                   isReadOnly: _isListening || translationState.isLoading,
                 ),
               ],
@@ -223,7 +221,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               translationState.translation != null
                           ? null
                           : switchLanguages,
-                      tooltip: 'Switch languages',
+                      tooltip: S.of(context).switchLanguages,
                     ),
                     const Gap(8),
                     CustomIconButton(
@@ -239,18 +237,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 ),
                               );
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Text copied to clipboard!'),
+                                SnackBar(
+                                  content: Text(
+                                    S.of(context).textCopiedToClipboard,
+                                  ),
                                 ),
                               );
                             },
-                      tooltip: 'Copy translation',
+                      tooltip: S.of(context).copyTranslation,
                     ),
                   ],
                 ),
                 LanguageTextField(
                   controller: translatedTextController,
-                  hintText: 'Translation will appear here...',
+                  hintText: S.of(context).translationWillAppearHere,
                   isReadOnly: true,
                 ),
               ],
@@ -297,8 +297,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   )
                 : Text(
                     translationState.translation != null
-                        ? 'Clear'
-                        : 'Translate',
+                        ? S.of(context).clear
+                        : S.of(context).translate,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,

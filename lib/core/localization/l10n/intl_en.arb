@@ -1,0 +1,18 @@
+{
+  "appName": "TransLazy",
+  "translation": "Translation",
+  "history": "History",
+  "sttNotAvailable": "Speech recognition is not available. Please check your microphone settings.",
+  "stopListening": "Stop listening",
+  "startListening": "Start listening",
+  "clearSourceText": "Clear text",
+  "enterTextToTranslate": "Enter text to translate...",
+  "switchLanguages": "Switch languages",
+  "textCopiedToClipboard": "Text copied to clipboard!",
+  "copyTranslation": "Copy translation",
+  "translationWillAppearHere": "Translation will appear here...",
+  "clear": "Clear",
+  "translate": "Translate",
+  "clearHistory": "Clear History",
+  "noTranslationsYet": "No translations yet"
+}
