@@ -49,7 +49,7 @@ jobs:
         with:
           tag_name: "v${{ env.BUILD_NUMBER }}"
           name: "Release v${{ env.BUILD_NUMBER }}"
-          files: build/app/outputs/flutter-apk/app-release.apk
+          files: build/app/outputs/flutter-apk/app-debug.apk
           token: "${{ secrets.ACTIONS_TOKEN }}"
           fail_on_unmatched_files: true
           make_latest: true
