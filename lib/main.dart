@@ -8,7 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:translazy/core/localization/generated/l10n.dart';
 import 'package:translazy/core/theme.dart';
 import 'package:translazy/presentation/base_screen.dart';
+import 'package:translazy/presentation/onboarding_screen.dart';
 import 'package:translazy/providers/localization_provider.dart';
+import 'package:translazy/providers/onboarding_provider.dart';
 import 'package:translazy/providers/shared_prefrences_provider.dart';
 import 'package:translazy/providers/theme_notifier_provider.dart';
 
@@ -35,6 +37,8 @@ class MainApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDarkMode = ref.watch(themeNotifierProvider);
+    final hasCompletedOnboarding = ref.watch(onboardingProvider);
+
     return MaterialApp(
       onGenerateTitle: (context) => S.of(context).appName,
       localizationsDelegates: const [
@@ -50,7 +54,9 @@ class MainApp extends ConsumerWidget {
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
       themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: const BaseScreen(),
+      home: hasCompletedOnboarding
+          ? const BaseScreen()
+          : const OnboardingScreen(),
     );
   }
 }
