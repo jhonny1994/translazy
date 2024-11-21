@@ -1,4 +1,3 @@
-// Separate Widget for Language Selector Button
 import 'package:flutter/material.dart';
 import 'package:translazy/core/supported_languages.dart';
 
@@ -16,10 +15,24 @@ class LanguageSelectorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton.icon(
+    return IconButton(
       onPressed: onTap,
-      icon: Text(SupportedLanguages.getFlag(languageCode)),
-      label: Text(SupportedLanguages.getLanguage(languageCode)),
+      icon: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            SupportedLanguages.getFlag(languageCode),
+            style: const TextStyle(fontSize: 18),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            SupportedLanguages.getLanguage(languageCode),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: isSelected ? FontWeight.bold : null,
+                ),
+          ),
+        ],
+      ),
     );
   }
 }

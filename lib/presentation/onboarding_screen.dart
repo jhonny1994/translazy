@@ -73,20 +73,28 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           Positioned(
             bottom: 60,
             right: 20,
-            child: ElevatedButton(
-              child: Text(
-                _currentPage == _pages.length - 1 ? 'Get Started' : 'Next',
+            child: SizedBox(
+              width: 120,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                ),
+                child: Text(
+                  _currentPage == _pages.length - 1 ? 'Get Started' : 'Next',
+                  textAlign: TextAlign.center,
+                ),
+                onPressed: () {
+                  if (_currentPage < _pages.length - 1) {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeIn,
+                    );
+                  } else {
+                    _completeOnboarding();
+                  }
+                },
               ),
-              onPressed: () {
-                if (_currentPage < _pages.length - 1) {
-                  _pageController.nextPage(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeIn,
-                  );
-                } else {
-                  _completeOnboarding();
-                }
-              },
             ),
           ),
         ],

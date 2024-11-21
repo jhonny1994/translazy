@@ -31,14 +31,22 @@ class HistoryScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 final record = history[index];
                 return Container(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[600]!),
-                    borderRadius: BorderRadius.circular(8),
-                    color:
-                        Theme.of(context).colorScheme.surface.withOpacity(0.85),
-                    boxShadow: const [
-                      BoxShadow(blurRadius: 8, color: Colors.black26),
+                    border: Border.all(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .outline
+                          .withOpacity(0.5),
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).colorScheme.surface,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 8,
+                        color: Theme.of(context).shadowColor.withOpacity(0.1),
+                        offset: const Offset(0, 2),
+                      ),
                     ],
                   ),
                   child: Column(
@@ -48,7 +56,17 @@ class HistoryScreen extends ConsumerWidget {
                         children: [
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.all(8),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 12,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer
+                                    .withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -56,23 +74,40 @@ class HistoryScreen extends ConsumerWidget {
                                     SupportedLanguages.getFlag(
                                       record.sourceLang,
                                     ),
+                                    style: const TextStyle(fontSize: 18),
                                   ),
-                                  const Gap(4),
+                                  const Gap(8),
                                   Text(
                                     SupportedLanguages.getLanguage(
                                       record.sourceLang,
                                     ),
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          const Gap(4),
-                          Icon(Icons.swap_horiz, color: Colors.grey[600]),
-                          const Gap(4),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.all(8),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 12,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer
+                                    .withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -80,12 +115,15 @@ class HistoryScreen extends ConsumerWidget {
                                     SupportedLanguages.getFlag(
                                       record.targetLang,
                                     ),
+                                    style: const TextStyle(fontSize: 18),
                                   ),
-                                  const Gap(4),
+                                  const Gap(8),
                                   Text(
                                     SupportedLanguages.getLanguage(
                                       record.targetLang,
                                     ),
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                 ],
                               ),
@@ -93,40 +131,59 @@ class HistoryScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
+                      const Gap(16),
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey[300]!),
+                          color: Theme.of(context).colorScheme.surface,
+                          border: Border.all(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .outline
+                                .withOpacity(0.3),
+                          ),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 16,
-                        ),
+                        padding: const EdgeInsets.all(12),
                         child: Text(
                           record.sourceText,
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
-                      const Gap(4),
+                      const Gap(12),
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey[300]!),
+                          color: Theme.of(context).colorScheme.surface,
+                          border: Border.all(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .outline
+                                .withOpacity(0.3),
+                          ),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 16,
-                        ),
+                        padding: const EdgeInsets.all(12),
                         child: Text(
                           record.translatedText,
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                         ),
                       ),
+                      const Gap(12),
                       Center(
                         child: Text(
-                          '${record.timestamp.day}/${record.timestamp.month}/${record.timestamp.year} - ${record.timestamp.hour}:${record.timestamp.minute}',
+                          '${record.timestamp.day.toString().padLeft(2, '0')}/${record.timestamp.month.toString().padLeft(2, '0')}/${record.timestamp.year} ${record.timestamp.hour.toString().padLeft(2, '0')}:${record.timestamp.minute.toString().padLeft(2, '0')}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
                         ),
                       ),
                     ],

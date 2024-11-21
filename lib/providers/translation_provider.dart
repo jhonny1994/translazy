@@ -6,5 +6,5 @@ import 'package:translazy/providers/dio_provider.dart';
 final translationProvider =
     StateNotifierProvider<TranslationNotifier, TranslationState>((ref) {
   final dio = ref.watch(dioProvider);
-  return TranslationNotifier(dio);
+  return TranslationNotifier(dio, ref);
 });

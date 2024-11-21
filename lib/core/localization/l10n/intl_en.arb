@@ -14,5 +14,53 @@
   "clear": "Clear",
   "translate": "Translate",
   "clearHistory": "Clear History",
-  "noTranslationsYet": "No translations yet"
+  "noTranslationsYet": "No translations yet",
+  "emptyTextError": "Please enter text to translate",
+  "textTooLongError": "Text exceeds maximum length of {maxLength} characters",
+  "@textTooLongError": {
+    "placeholders": {
+      "maxLength": {
+        "type": "int"
+      }
+    }
+  },
+  "rateLimitError": "Too many requests. Please wait {seconds} seconds.",
+  "@rateLimitError": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "timeoutError": "Request timed out after {seconds} seconds. Please try again.",
+  "@timeoutError": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "networkError": "Network error. Please check your connection.",
+  "apiError": "API Error: {code} - {message}",
+  "@apiError": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "unexpectedError": "Unexpected Error: {message}",
+  "@unexpectedError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "selectLanguage": "Select language",
+  "microphonePermissionDenied": "Microphone permission is required for speech recognition.",
+  "maxListeningDurationReached": "Maximum listening duration reached. Please try again."
 }

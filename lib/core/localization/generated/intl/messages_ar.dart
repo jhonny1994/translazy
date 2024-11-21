@@ -20,28 +20,56 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(code, message) =>
+      "خطأ في واجهة البرمجة: ${code} - ${message}";
+
+  static String m1(seconds) =>
+      "عدد كبير من الطلبات. يرجى الانتظار ${seconds} ثانية";
+
+  static String m2(maxLength) =>
+      "يتجاوز النص الحد الأقصى البالغ ${maxLength} حرف";
+
+  static String m3(seconds) =>
+      "انتهت مهلة الطلب بعد ${seconds} ثانية. يرجى المحاولة مرة أخرى";
+
+  static String m4(message) => "خطأ غير متوقع: ${message}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "appName": MessageLookupByLibrary.simpleMessage("TransLazy"),
+        "apiError": m0,
+        "appName": MessageLookupByLibrary.simpleMessage("Translazy"),
         "clear": MessageLookupByLibrary.simpleMessage("مسح"),
         "clearHistory": MessageLookupByLibrary.simpleMessage("مسح السجل"),
         "clearSourceText": MessageLookupByLibrary.simpleMessage("مسح النص"),
         "copyTranslation": MessageLookupByLibrary.simpleMessage("نسخ الترجمة"),
+        "emptyTextError":
+            MessageLookupByLibrary.simpleMessage("الرجاء إدخال نص للترجمة"),
         "enterTextToTranslate":
-            MessageLookupByLibrary.simpleMessage("أدخل نصا للترجمة..."),
-        "history": MessageLookupByLibrary.simpleMessage("سجل"),
+            MessageLookupByLibrary.simpleMessage("أدخل النص المراد ترجمته..."),
+        "history": MessageLookupByLibrary.simpleMessage("السجل"),
+        "maxListeningDurationReached": MessageLookupByLibrary.simpleMessage(
+            "تم الوصول للحد الأقصى لمدة الاستماع. يرجى المحاولة مرة أخرى"),
+        "microphonePermissionDenied": MessageLookupByLibrary.simpleMessage(
+            "يلزم السماح باستخدام الميكروفون للتعرف على الصوت"),
+        "networkError": MessageLookupByLibrary.simpleMessage(
+            "خطأ في الاتصال. يرجى التحقق من اتصالك بالإنترنت"),
         "noTranslationsYet":
-            MessageLookupByLibrary.simpleMessage("لا توجد ترجمات حتى الآن"),
+            MessageLookupByLibrary.simpleMessage("لا توجد ترجمات بعد"),
+        "rateLimitError": m1,
+        "selectLanguage": MessageLookupByLibrary.simpleMessage("اختر اللغة"),
         "startListening": MessageLookupByLibrary.simpleMessage("بدء الاستماع"),
         "stopListening": MessageLookupByLibrary.simpleMessage("إيقاف الاستماع"),
         "sttNotAvailable": MessageLookupByLibrary.simpleMessage(
-            "التعرف على الصوت غير متوفر. يرجى التحقق من إعدادات الميكروفون."),
+            "خاصية التعرف على الصوت غير متوفرة. يرجى التحقق من إعدادات الميكروفون."),
         "switchLanguages": MessageLookupByLibrary.simpleMessage("تبديل اللغات"),
         "textCopiedToClipboard":
             MessageLookupByLibrary.simpleMessage("تم نسخ النص إلى الحافظة!"),
-        "translate": MessageLookupByLibrary.simpleMessage("ترجمة"),
-        "translation": MessageLookupByLibrary.simpleMessage("ترجمة"),
+        "textTooLongError": m2,
+        "timeoutError": m3,
+        "translate": MessageLookupByLibrary.simpleMessage("ترجم"),
+        "translation": MessageLookupByLibrary.simpleMessage("الترجمة"),
         "translationWillAppearHere":
-            MessageLookupByLibrary.simpleMessage("ستظهر الترجمة هنا...")
+            MessageLookupByLibrary.simpleMessage("ستظهر الترجمة هنا..."),
+        "unexpectedError": m4
       };
 }

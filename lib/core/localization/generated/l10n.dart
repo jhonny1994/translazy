@@ -209,6 +209,106 @@ class S {
       args: [],
     );
   }
+
+  /// `Please enter text to translate`
+  String get emptyTextError {
+    return Intl.message(
+      'Please enter text to translate',
+      name: 'emptyTextError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Text exceeds maximum length of {maxLength} characters`
+  String textTooLongError(int maxLength) {
+    return Intl.message(
+      'Text exceeds maximum length of $maxLength characters',
+      name: 'textTooLongError',
+      desc: '',
+      args: [maxLength],
+    );
+  }
+
+  /// `Too many requests. Please wait {seconds} seconds.`
+  String rateLimitError(int seconds) {
+    return Intl.message(
+      'Too many requests. Please wait $seconds seconds.',
+      name: 'rateLimitError',
+      desc: '',
+      args: [seconds],
+    );
+  }
+
+  /// `Request timed out after {seconds} seconds. Please try again.`
+  String timeoutError(int seconds) {
+    return Intl.message(
+      'Request timed out after $seconds seconds. Please try again.',
+      name: 'timeoutError',
+      desc: '',
+      args: [seconds],
+    );
+  }
+
+  /// `Network error. Please check your connection.`
+  String get networkError {
+    return Intl.message(
+      'Network error. Please check your connection.',
+      name: 'networkError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `API Error: {code} - {message}`
+  String apiError(int code, String message) {
+    return Intl.message(
+      'API Error: $code - $message',
+      name: 'apiError',
+      desc: '',
+      args: [code, message],
+    );
+  }
+
+  /// `Unexpected Error: {message}`
+  String unexpectedError(String message) {
+    return Intl.message(
+      'Unexpected Error: $message',
+      name: 'unexpectedError',
+      desc: '',
+      args: [message],
+    );
+  }
+
+  /// `Select language`
+  String get selectLanguage {
+    return Intl.message(
+      'Select language',
+      name: 'selectLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Microphone permission is required for speech recognition.`
+  String get microphonePermissionDenied {
+    return Intl.message(
+      'Microphone permission is required for speech recognition.',
+      name: 'microphonePermissionDenied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum listening duration reached. Please try again.`
+  String get maxListeningDurationReached {
+    return Intl.message(
+      'Maximum listening duration reached. Please try again.',
+      name: 'maxListeningDurationReached',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

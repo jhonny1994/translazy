@@ -1,18 +1,66 @@
 {
-  "appName": "TransLazy",
-  "translation": "ترجمة",
-  "history": "سجل",
-  "sttNotAvailable": "التعرف على الصوت غير متوفر. يرجى التحقق من إعدادات الميكروفون.",
+  "appName": "Translazy",
+  "translation": "الترجمة",
+  "history": "السجل",
+  "sttNotAvailable": "خاصية التعرف على الصوت غير متوفرة. يرجى التحقق من إعدادات الميكروفون.",
   "stopListening": "إيقاف الاستماع",
   "startListening": "بدء الاستماع",
   "clearSourceText": "مسح النص",
-  "enterTextToTranslate": "أدخل نصا للترجمة...",
+  "enterTextToTranslate": "أدخل النص المراد ترجمته...",
   "switchLanguages": "تبديل اللغات",
   "textCopiedToClipboard": "تم نسخ النص إلى الحافظة!",
   "copyTranslation": "نسخ الترجمة",
   "translationWillAppearHere": "ستظهر الترجمة هنا...",
   "clear": "مسح",
-  "translate": "ترجمة",
+  "translate": "ترجم",
   "clearHistory": "مسح السجل",
-  "noTranslationsYet": "لا توجد ترجمات حتى الآن"
+  "noTranslationsYet": "لا توجد ترجمات بعد",
+  "emptyTextError": "الرجاء إدخال نص للترجمة",
+  "textTooLongError": "يتجاوز النص الحد الأقصى البالغ {maxLength} حرف",
+  "@textTooLongError": {
+    "placeholders": {
+      "maxLength": {
+        "type": "int"
+      }
+    }
+  },
+  "rateLimitError": "عدد كبير من الطلبات. يرجى الانتظار {seconds} ثانية",
+  "@rateLimitError": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "timeoutError": "انتهت مهلة الطلب بعد {seconds} ثانية. يرجى المحاولة مرة أخرى",
+  "@timeoutError": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "networkError": "خطأ في الاتصال. يرجى التحقق من اتصالك بالإنترنت",
+  "apiError": "خطأ في واجهة البرمجة: {code} - {message}",
+  "@apiError": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "unexpectedError": "خطأ غير متوقع: {message}",
+  "@unexpectedError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "selectLanguage": "اختر اللغة",
+  "microphonePermissionDenied": "يلزم السماح باستخدام الميكروفون للتعرف على الصوت",
+  "maxListeningDurationReached": "تم الوصول للحد الأقصى لمدة الاستماع. يرجى المحاولة مرة أخرى"
 }

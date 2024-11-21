@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:translazy/core/localization/generated/l10n.dart';
+import 'package:translazy/core/supported_languages.dart';
 import 'package:translazy/presentation/history_screen.dart';
 import 'package:translazy/presentation/home_screen.dart';
 import 'package:translazy/providers/localization_provider.dart';
@@ -26,6 +27,7 @@ class _BaseScreenState extends ConsumerState<BaseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: Text(S.current.appName),
         centerTitle: true,
         leading: IconButton(
@@ -37,18 +39,51 @@ class _BaseScreenState extends ConsumerState<BaseScreen> {
           ),
         ),
         actions: [
-          PopupMenuButton<Locale>(
+          IconButton(
+            onPressed: () => showDialog<void>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text(S.of(context).selectLanguage),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: S.delegate.supportedLocales.map((locale) {
+                      final isSelected =
+                          ref.watch(localizationNotifierProvider) == locale;
+                      return ListTile(
+                        title: Row(
+                          children: [
+                            Text(
+                              SupportedLanguages.getLanguage(
+                                locale.languageCode,
+                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontWeight:
+                                        isSelected ? FontWeight.bold : null,
+                                  ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              SupportedLanguages.getFlag(locale.languageCode),
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                        selected: isSelected,
+                        onTap: () {
+                          ref
+                              .read(localizationNotifierProvider.notifier)
+                              .toggle(locale);
+                          Navigator.pop(context);
+                        },
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
             icon: const Icon(Icons.language),
-            onSelected: (value) =>
-                ref.read(localizationNotifierProvider.notifier).toggle(value),
-            itemBuilder: (context) {
-              return S.delegate.supportedLocales.map((locale) {
-                return PopupMenuItem<Locale>(
-                  value: locale,
-                  child: Text(locale.languageCode),
-                );
-              }).toList();
-            },
           ),
           const Gap(8),
         ],
@@ -69,7 +104,7 @@ class _BaseScreenState extends ConsumerState<BaseScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.all(8),
           child: pages.firstWhere(
             (page) => _currentIndex == pages.indexOf(page),
           ),
