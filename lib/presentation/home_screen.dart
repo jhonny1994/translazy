@@ -246,7 +246,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         Navigator.pop(context);
                       },
                 tileColor: entry.key == (isSourceLang ? sourceLang : targetLang)
-                    ? Theme.of(context).colorScheme.primary.withOpacity(0.25)
+                    ? Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.25)
                     : null,
               );
             }).toList(),
@@ -444,7 +447,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 12),
-                shadowColor: Colors.black.withOpacity(0.3),
+                shadowColor: Colors.black.withValues(alpha: 0.3),
               ),
               child: translationState.isLoading
                   ? const SizedBox(

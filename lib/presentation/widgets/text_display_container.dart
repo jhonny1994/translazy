@@ -35,11 +35,11 @@ class TextDisplayContainer extends StatelessWidget {
               width: state == TextDisplayState.error ? 2 : 1,
             ),
             borderRadius: BorderRadius.circular(16),
-            color: theme.colorScheme.surface.withOpacity(0.95),
+            color: theme.colorScheme.surface.withValues(alpha: 0.95),
             boxShadow: [
               BoxShadow(
                 blurRadius: 8,
-                color: theme.colorScheme.shadow.withOpacity(0.1),
+                color: theme.colorScheme.shadow.withValues(alpha: 0.1),
                 offset: const Offset(0, 2),
               ),
             ],
@@ -62,7 +62,7 @@ class TextDisplayContainer extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 8,
-                    color: theme.colorScheme.shadow.withOpacity(0.1),
+                    color: theme.colorScheme.shadow.withValues(alpha: 0.1),
                   ),
                 ],
               ),
@@ -120,7 +120,7 @@ class TextDisplayContainer extends StatelessWidget {
       case TextDisplayState.error:
         return theme.colorScheme.error;
       case TextDisplayState.idle:
-        return theme.colorScheme.outline.withOpacity(0.5);
+        return theme.colorScheme.outline.withValues(alpha: 0.5);
     }
   }
 }

@@ -37,14 +37,16 @@ class HistoryScreen extends ConsumerWidget {
                       color: Theme.of(context)
                           .colorScheme
                           .outline
-                          .withOpacity(0.5),
+                          .withValues(alpha: 0.5),
                     ),
                     borderRadius: BorderRadius.circular(12),
                     color: Theme.of(context).colorScheme.surface,
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 8,
-                        color: Theme.of(context).shadowColor.withOpacity(0.1),
+                        color: Theme.of(context)
+                            .shadowColor
+                            .withValues(alpha: 0.1),
                         offset: const Offset(0, 2),
                       ),
                     ],
@@ -64,7 +66,7 @@ class HistoryScreen extends ConsumerWidget {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .primaryContainer
-                                    .withOpacity(0.2),
+                                    .withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Row(
@@ -105,7 +107,7 @@ class HistoryScreen extends ConsumerWidget {
                                 color: Theme.of(context)
                                     .colorScheme
                                     .primaryContainer
-                                    .withOpacity(0.2),
+                                    .withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Row(
@@ -140,7 +142,7 @@ class HistoryScreen extends ConsumerWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .outline
-                                .withOpacity(0.3),
+                                .withValues(alpha: 0.3),
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -159,7 +161,7 @@ class HistoryScreen extends ConsumerWidget {
                             color: Theme.of(context)
                                 .colorScheme
                                 .outline
-                                .withOpacity(0.3),
+                                .withValues(alpha: 0.3),
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
