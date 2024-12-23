@@ -2,12 +2,9 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:translazy/core/constants.dart';
-import 'package:translazy/core/exceptions.dart';
-import 'package:translazy/core/localization/generated/l10n.dart';
-import 'package:translazy/domain/translation_model.dart';
-import 'package:translazy/domain/translation_state.dart';
-import 'package:translazy/providers/history_notifier_provider.dart';
+import 'package:translazy/core/core.dart';
+import 'package:translazy/domain/domain.dart';
+import 'package:translazy/providers/providers.dart';
 
 class TranslationNotifier extends StateNotifier<TranslationState> {
   TranslationNotifier(this.dio, this.ref) : super(TranslationState.initial());

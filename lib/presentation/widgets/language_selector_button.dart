@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:translazy/core/supported_languages.dart';
+import 'package:translazy/core/core.dart';
 
 class LanguageSelectorButton extends StatelessWidget {
   const LanguageSelectorButton({

@@ -6,13 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-import 'package:translazy/core/localization/generated/l10n.dart';
-import 'package:translazy/core/supported_languages.dart';
-import 'package:translazy/presentation/widgets/custom_icon_button.dart';
-import 'package:translazy/presentation/widgets/language_selector_button.dart';
-import 'package:translazy/presentation/widgets/language_text_field.dart';
-import 'package:translazy/presentation/widgets/text_display_container.dart';
-import 'package:translazy/providers/translation_provider.dart';
+import 'package:translazy/core/core.dart';
+import 'package:translazy/presentation/presentation.dart';
+import 'package:translazy/providers/providers.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});

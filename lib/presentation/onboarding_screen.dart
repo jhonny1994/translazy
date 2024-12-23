@@ -1,7 +1,7 @@
 // lib/presentation/onboarding_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:translazy/providers/onboarding_provider.dart';
+import 'package:translazy/providers/providers.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});

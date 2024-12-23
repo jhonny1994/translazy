@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:translazy/domain/translation_model.dart';
+import 'package:translazy/domain/domain.dart';
 
 class HistoryNotifier extends StateNotifier<List<TranslationRecord>> {
   HistoryNotifier(this.prefs) : super([]) {

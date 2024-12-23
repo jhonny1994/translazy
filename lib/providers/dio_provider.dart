@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:translazy/core/constants.dart';
+import 'package:translazy/core/core.dart';
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio()

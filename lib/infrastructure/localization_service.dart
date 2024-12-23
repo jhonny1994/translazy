@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:translazy/core/localization/generated/l10n.dart';
+import 'package:translazy/core/core.dart';
 
 class LocalizationNotifier extends StateNotifier<Locale> {
   LocalizationNotifier(this.prefs) : super(S.delegate.supportedLocales.first) {

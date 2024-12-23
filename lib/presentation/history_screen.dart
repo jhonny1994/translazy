@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:translazy/core/localization/generated/l10n.dart';
-import 'package:translazy/core/supported_languages.dart';
-import 'package:translazy/providers/history_notifier_provider.dart';
+import 'package:translazy/core/core.dart';
+import 'package:translazy/providers/providers.dart';
 
 class HistoryScreen extends ConsumerWidget {
   const HistoryScreen({super.key});

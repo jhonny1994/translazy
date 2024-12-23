@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:translazy/core/colors.dart';
+import 'package:translazy/core/core.dart';
 
 class AppThemes {
   static final _defaultRadius = BorderRadius.circular(12);

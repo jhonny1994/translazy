@@ -6,14 +6,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:translazy/core/localization/generated/l10n.dart';
-import 'package:translazy/core/theme.dart';
-import 'package:translazy/presentation/base_screen.dart';
-import 'package:translazy/presentation/onboarding_screen.dart';
-import 'package:translazy/providers/localization_provider.dart';
-import 'package:translazy/providers/onboarding_provider.dart';
-import 'package:translazy/providers/shared_prefrences_provider.dart';
-import 'package:translazy/providers/theme_notifier_provider.dart';
+import 'package:translazy/core/core.dart';
+import 'package:translazy/presentation/presentation.dart';
+import 'package:translazy/providers/providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
