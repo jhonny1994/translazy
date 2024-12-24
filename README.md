@@ -1,26 +1,44 @@
-<h1 align="center" id="title">Translazy – Effortless Text Translation at Your Fingertips</h1>
+# Translazy – Effortless Text Translation at Your Fingertips
 
-<p align="center"><img src="https://github.com/user-attachments/assets/2150b6d6-a255-4f5c-b41a-a308ea517492" alt="translazy" width="640" height="320" /></p>
+![translazy](https://github.com/user-attachments/assets/2150b6d6-a255-4f5c-b41a-a308ea517492)
 
-<p id="description">Translazy is your go-to app for instant text translation. Whether you’re traveling studying a new language or communicating across borders Translazy makes it simple and fast to bridge language gaps. With a few taps you can translate text between multiple languages making communication as smooth and lazy as it should be!</p>
+Translazy is your go-to app for instant text translation. Whether you’re traveling, studying a new language, or communicating across borders, Translazy makes it simple and fast to bridge language gaps. With a few taps, you can translate text between multiple languages, making communication as smooth and lazy as it should be!
 
-  
-  
-<h2>🧐 Features</h2>
+## 🧐 Features
 
-Here're some of the project's best features:
+Here are some of the project's best features:
 
-*   Instant Translation: Translate any text in seconds with support for multiple languages.
-*   Seamless User Experience: Clean and intuitive design focused on effortless translation.
-*   Error Handling: Get clear messages when translation limits are reached or a network issue occurs.
-*   Multi-Language Interface: The app adapts to your device language for a personalized experience.
+- Instant Translation: Translate any text in seconds with support for multiple languages.
+- Seamless User Experience: Clean and intuitive design focused on effortless translation.
+- Error Handling: Get clear messages when translation limits are reached or a network issue occurs.
+- Multi-Language Interface: The app adapts to the user's preferred language for a personalized experience.
 
-  
-  
-<h2>💻 Built with</h2>
+### Minimum Viable Product (MVP)
 
-Technologies used in the project:
+- Instant text translation between multiple languages.
+- User-friendly interface for easy navigation.
+- Support for commonly used languages.
+- History of recent translations for user convenience.
 
-*   Flutter
-*   Riverpod
-*   TAS Translation API
+## Wireframing and Prototyping
+
+- Wireframes have been created to outline the app’s main screens and user flows, focusing on onboarding and key interactions.
+- User scenarios have been validated to refine the wireframes and ensure a smooth user experience.
+
+## UI/UX Design
+
+- Utilizing pre-designed UI kits to optimize development time.
+- Prioritizing simplicity and usability to ensure the app is intuitive for end users.
+- Implementing a cohesive theme that includes light and dark modes for enhanced user experience.
+
+## App Development
+
+- The development will focus on building the MVP first, with core features prioritized.
+- Tasks will be divided into small, manageable sprints to ensure incremental progress.
+- Frequent testing of new components will be conducted to catch bugs early.
+
+## Deployment
+
+- Version Control: The codebase will be pushed to GitHub with detailed documentation, including a README, usage instructions, and changelogs.
+- Assets: App icons, screenshots, and a store description will be created.
+- Publishing: The app will be deployed to the Google Play Store and made available for public access or open-source contributions.

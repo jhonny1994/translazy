@@ -24,7 +24,7 @@ class _BaseScreenState extends ConsumerState<BaseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        forceMaterialTransparency: true,
         title: Text(S.current.appName),
         centerTitle: true,
         leading: IconButton(

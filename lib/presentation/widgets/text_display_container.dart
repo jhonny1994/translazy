@@ -26,7 +26,7 @@ class TextDisplayContainer extends StatelessWidget {
       children: [
         AnimatedContainer(
           width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.35,
+          height: MediaQuery.of(context).size.height * 0.325,
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
